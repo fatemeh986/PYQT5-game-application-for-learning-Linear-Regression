@@ -6,31 +6,55 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>809</width>
-    <height>658</height>
+    <width>1800</width>
+    <height>1097</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetNoConstraint</enum>
+    </property>
     <item>
      <widget class="QGroupBox" name="groupBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string/>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
+          <widget class="QGroupBox" name="signalPlotGroup">
            <property name="title">
             <string/>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0">
-             <widget class="QSlider" name="verticalSlider_5">
+             <widget class="QSlider" name="aSlider">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -44,14 +68,20 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QSlider" name="horizontalSlider_3">
+             <widget class="QSlider" name="nSlider">
+              <property name="minimum">
+               <number>5</number>
+              </property>
+              <property name="maximum">
+               <number>200</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QSlider" name="verticalSlider_6">
+             <widget class="QSlider" name="bSlider">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -65,10 +95,21 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QGroupBox" name="groupBox_9">
+             <widget class="QGroupBox" name="init_signal_group_box">
               <property name="title">
                <string/>
               </property>
+              <widget class="QWidget" name="verticalLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>-1</x>
+                 <y>-1</y>
+                 <width>781</width>
+                 <height>391</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="init_signal_vlayout"/>
+              </widget>
              </widget>
             </item>
             <item row="2" column="1" alignment="Qt::AlignHCenter">
@@ -82,15 +123,79 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="noisySignalPlotGroup">
            <property name="title">
             <string/>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="2">
+             <widget class="QSlider" name="sigmaSlider">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>50</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Bins</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QSlider" name="meanSlider">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>40</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
-             <widget class="QGroupBox" name="groupBox_7">
+             <widget class="QGroupBox" name="noisy_signal_group_box">
               <property name="title">
                <string/>
+              </property>
+              <widget class="QWidget" name="verticalLayoutWidget_2">
+               <property name="geometry">
+                <rect>
+                 <x>-1</x>
+                 <y>-1</y>
+                 <width>781</width>
+                 <height>391</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="noisy_signal_vlayout"/>
+              </widget>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>S</string>
               </property>
              </widget>
             </item>
@@ -101,38 +206,16 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QSlider" name="verticalSlider">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="1">
-             <widget class="QSlider" name="horizontalSlider">
+             <widget class="QSlider" name="binsSlider">
+              <property name="minimum">
+               <number>2</number>
+              </property>
+              <property name="maximum">
+               <number>15</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>S</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QSlider" name="verticalSlider_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" alignment="Qt::AlignHCenter">
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>Bins</string>
               </property>
              </widget>
             </item>
@@ -146,128 +229,40 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string/>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_10">
-         <item row="0" column="2">
-          <widget class="QGroupBox" name="groupBox_5">
-           <property name="title">
-            <string/>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_7">
-            <item row="0" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QGroupBox" name="groupBox_11">
-                <property name="title">
-                 <string/>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_9">
-                 <item row="0" column="0">
-                  <layout class="QVBoxLayout" name="verticalLayout_6"/>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <widget class="QGroupBox" name="groupBox_12">
-                <property name="title">
-                 <string/>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_8">
-                 <item row="5" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout_3">
-                   <item>
-                    <widget class="QLabel" name="label_8">
-                     <property name="text">
-                      <string>Estimated</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_3"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_2"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="6" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout_4">
-                   <item>
-                    <widget class="QLabel" name="label_9">
-                     <property name="text">
-                      <string>Errors</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_6"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_5"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_4"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="7" column="0">
-                  <widget class="QLineEdit" name="lineEdit_7"/>
-                 </item>
-                 <item row="2" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout_5">
-                   <item>
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>Initial values</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_10"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_9"/>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_8"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="0" column="0" alignment="Qt::AlignHCenter">
-                  <widget class="QLabel" name="label_10">
-                   <property name="text">
-                    <string>Results</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="0" column="0">
-          <widget class="QGroupBox" name="groupBox_6">
+          <widget class="QGroupBox" name="noiseGroup">
            <property name="title">
             <string/>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="1" column="1">
-             <widget class="QComboBox" name="comboBox"/>
+             <widget class="QComboBox" name="noiseType">
+              <item>
+               <property name="text">
+                <string>Gaussian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Uniform</string>
+               </property>
+              </item>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label">
@@ -279,10 +274,21 @@
             <item row="0" column="0" colspan="2">
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="QGroupBox" name="groupBox_10">
+               <widget class="QGroupBox" name="noise_dist_group_box">
                 <property name="title">
                  <string/>
                 </property>
+                <widget class="QWidget" name="verticalLayoutWidget_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>-1</x>
+                   <y>-1</y>
+                   <width>841</width>
+                   <height>421</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="noise_distribution_vlayout"/>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -291,17 +297,165 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          <widget class="QGroupBox" name="groupBox_5">
+           <property name="title">
+            <string/>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="1" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QGroupBox" name="resultsCalculationBox">
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_8">
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <item>
+                    <widget class="QLabel" name="errorsLabel">
+                     <property name="text">
+                      <string>Errors</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="errorALabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="errorBLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="errorSigmaLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="RLabel">
+                   <property name="minimumSize">
+                    <size>
+                     <width>450</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>R^2=0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0" alignment="Qt::AlignHCenter">
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>Results</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <item>
+                    <widget class="QLabel" name="initialValuesLabel">
+                     <property name="text">
+                      <string>Initial values</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="initialALabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="initialBLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="initialSigmaLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <item>
+                    <widget class="QLabel" name="estimatedLabel">
+                     <property name="text">
+                      <string>Estimated</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="estimatedALabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="estimatedBLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="estimatedSigmaLabel">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QGroupBox" name="groupBox_11">
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_9">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="noisePlotVLayout">
+                   <item>
+                    <layout class="QVBoxLayout" name="noise_vlayout"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </item>
