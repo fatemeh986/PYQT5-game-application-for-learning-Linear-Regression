@@ -1,12 +1,12 @@
-import numpy as np
 import warnings
 import math
 
 warnings.filterwarnings("ignore")
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QSizePolicy
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtGui import QPen, QBrush
-import pyqtgraph as pg
+import matplotlib.pyplot as plt
 import numpy as np
 from projectDesign import Ui_MainWindow
 
@@ -26,10 +26,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.sigmaSlider.valueChanged.connect(self.add_noise_to_signal)
 
     def setupPlots(self):
-        self.initial_signal_plot_widget = self.createPlotWidget()
-        self.noisy_signal_plot_widget = self.createPlotWidget()
-        self.noise_plot_widget = self.createPlotWidget()
-        self.noise_distribution_plot_widget = self.createPlotWidget()
+        self.initial_signal_plot_widget = FigureCanvas(plt.Figure())
+        self.noisy_signal_plot_widget = FigureCanvas(plt.Figure())
+        self.noise_plot_widget = FigureCanvas(plt.Figure())
+        self.noise_distribution_plot_widget = FigureCanvas(plt.Figure())
         self.ui.init_signal_vlayout.addWidget(
             self.initial_signal_plot_widget, stretch=1
         )
@@ -38,11 +38,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.noise_distribution_plot_widget, stretch=1
         )
         self.ui.noisePlotVLayout.addWidget(self.noise_plot_widget, stretch=1)
-
-    def createPlotWidget(self):
-        plot_widget = pg.PlotWidget()
-        plot_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        return plot_widget
 
     def initialize_variables(self):
         self.initial_signal = []
@@ -85,15 +80,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.add_noise_to_signal()
 
     def plot_initial_signal(self):
-        self.initial_signal_plot_widget.clear()
+        self.initial_signal_plot_widget.figure.clear()
 
-        self.initial_signal_plot_widget.plot(
-            range(len(self.initial_signal)), self.initial_signal
-        )
-
-        self.initial_signal_plot_widget.setTitle("Initial Signal")
-        self.initial_signal_plot_widget.setLabel("left", "Y")
-        self.initial_signal_plot_widget.setLabel("bottom", "X")
+        ax = self.initial_signal_plot_widget.figure.add_subplot(111)
+        ax.plot(range(len(self.initial_signal)), self.initial_signal)
+        ax.set_title("Initial Signal")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        self.initial_signal_plot_widget.draw()
 
     def add_noise_to_signal(self):
         noise_type = self.ui.noiseType.currentText()
@@ -101,12 +95,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         mean = int(self.ui.meanSlider.value())
 
         if noise_type == "Gaussian":
-            print("gaussian")
             self.noise = np.random.normal(sigma, mean, size=len(self.initial_signal))
             self.noisy_signal = self.initial_signal + self.noise
 
         else:
-            print("uniform")
             low = mean - sigma * math.sqrt(3)
             high = mean + sigma * math.sqrt(3)
             self.noise = np.random.uniform(low, high, size=len(self.initial_signal))
@@ -116,17 +108,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.plot_noisy_signal()
 
     def plot_noisy_signal(self):
-        self.noisy_signal_plot_widget.clear()
-        x_values = np.arange(self.ui.nSlider.value())
-        projection = self.estimated_a * x_values + self.estimated_b
-        self.noisy_signal_plot_widget.plot(
-            range(len(self.noisy_signal)), self.noisy_signal
+        self.noisy_signal_plot_widget.figure.clear()
+        ax = self.noisy_signal_plot_widget.figure.add_subplot(111)
+        ax.plot(range(len(self.noisy_signal)), self.noisy_signal)
+        ax.plot(
+            range(len(self.noisy_signal)),
+            self.estimated_a * np.arange(len(self.noisy_signal)) + self.estimated_b,
         )
-        self.noisy_signal_plot_widget.plot(range(len(self.noisy_signal)), projection)
-
-        self.noisy_signal_plot_widget.setTitle("Noisy Signal")
-        self.noisy_signal_plot_widget.setLabel("left", "Y")
-        self.noisy_signal_plot_widget.setLabel("bottom", "X")
+        ax.set_title("Noisy Signal")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        self.noisy_signal_plot_widget.draw()
 
     def find_linear_trend(self):
         if len(self.noisy_signal) > 1:
@@ -151,39 +143,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.plot_noise_distribution()
 
     def plot_noise(self):
-        self.noise_plot_widget.clear()
+        self.noise_plot_widget.figure.clear()
 
-        self.noise_plot_widget.plot(range(len(self.initial_signal)), self.noise)
-
-        self.noise_plot_widget.setTitle("Noise")
-        self.noise_plot_widget.setLabel("left", "Y")
-        self.noise_plot_widget.setLabel("bottom", "X")
+        ax = self.noise_plot_widget.figure.add_subplot(111)
+        ax.plot(range(len(self.initial_signal)), self.noise)
+        ax.set_title("Noise")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        self.noise_plot_widget.draw()
 
     def plot_noise_distribution(self):
-        self.noise_distribution_plot_widget.clear()
+        self.noise_distribution_plot_widget.figure.clear()
 
-        hist, edges = np.histogram(self.noise, bins=int(self.ui.binsSlider.value()))
-
-        histogram_plot_item = pg.PlotDataItem(
-            x=edges,
-            y=hist,
-            stepMode=True,
-            fillLevel=0,
-            brush=QBrush(Qt.blue),  # Customize the bar color as needed
-            pen=QPen(Qt.black),
-        )
-
-        pen = pg.mkPen(width=1)  # Customize the line color and width as needed
-        histogram_plot_item.setPen(pen)
-
-        # Add the PlotDataItem to the PlotWidget
-        self.noise_distribution_plot_widget.addItem(histogram_plot_item)
-
-        # self.noise_distribution_plot_widget.plot(range(len(self.initial_signal)), self.noise)
-
-        self.noise_distribution_plot_widget.setTitle("Noise")
-        self.noise_distribution_plot_widget.setLabel("left", "Y")
-        self.noise_distribution_plot_widget.setLabel("bottom", "X")
+        ax = self.noise_distribution_plot_widget.figure.add_subplot(111)
+        ax.hist(self.noise, bins=int(self.ui.binsSlider.value()))
+        ax.set_title("Noise Distribution")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        self.noise_distribution_plot_widget.draw()
 
     def calculate_error(self):
         if self.estimated_a != 0 and self.estimated_b != 0:
