@@ -33,9 +33,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.init_signal_vlayout.addWidget(
             self.initial_signal_plot_widget, stretch=1
         )
-        self.ui.noisy_signal_vlayout.addWidget(self.noisy_signal_plot_widget, stretch=1)
+        self.ui.noisy_signal_vlayout.addWidget(self.noise_distribution_plot_widget, stretch=1)
         self.ui.noise_distribution_vlayout.addWidget(
-            self.noise_distribution_plot_widget, stretch=1
+            self.noisy_signal_plot_widget, stretch=1
         )
         self.ui.noisePlotVLayout.addWidget(self.noise_plot_widget, stretch=1)
 
@@ -70,9 +70,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         b = int(self.ui.bSlider.value())
         n = int(self.ui.nSlider.value())
 
-        self.ui.initialALabel.setText(str(a))
-        self.ui.initialBLabel.setText(str(b))
-        self.ui.initialSigmaLabel.setText(str(self.ui.sigmaSlider.value()))
+        self.ui.initialALabel.setText(f"a = {a}")
+        self.ui.initialBLabel.setText(f"b = {b}")
+        # self.ui.initialSigmaLabel.setText(f"sigma = {self.ui.sigmaSlider.value()}")
 
         self.initial_signal = [a * x + b for x in range(n)]
 
@@ -81,13 +81,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def plot_initial_signal(self):
         self.initial_signal_plot_widget.figure.clear()
+        N=len(self.initial_signal)
 
         ax = self.initial_signal_plot_widget.figure.add_subplot(111)
-        ax.plot(range(len(self.initial_signal)), self.initial_signal)
+        ax.plot(range(N), self.initial_signal)
         ax.set_title("Initial Signal")
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
         self.initial_signal_plot_widget.draw()
+        self.ui.label_4.setText(f"N = {N}")
 
     def add_noise_to_signal(self):
         noise_type = self.ui.noiseType.currentText()
@@ -106,6 +108,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.find_linear_trend()
         self.plot_noisy_signal()
+        self.ui.label_5.setText(f"Mean={mean}")
+        self.ui.initialSigmaLabel.setText(f"sigma = {self.ui.sigmaSlider.value()}")
+
 
     def plot_noisy_signal(self):
         self.noisy_signal_plot_widget.figure.clear()
@@ -135,9 +140,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             residuals = self.noisy_signal - trend
             self.estimated_sigma = np.std(residuals)
 
-            self.ui.estimatedALabel.setText(str(self.estimated_a))
-            self.ui.estimatedBLabel.setText(str(self.estimated_b))
-            self.ui.estimatedSigmaLabel.setText(str(self.estimated_sigma))
+            self.ui.estimatedALabel.setText(f"a = {self.estimated_a:.3f}")
+            self.ui.estimatedBLabel.setText(f"b = {self.estimated_b:.3f}")
+            self.ui.estimatedSigmaLabel.setText(f"sigma = {self.estimated_sigma:.3f}")
             self.calculate_error()
             self.plot_noise()
             self.plot_noise_distribution()
@@ -156,11 +161,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.noise_distribution_plot_widget.figure.clear()
 
         ax = self.noise_distribution_plot_widget.figure.add_subplot(111)
-        ax.hist(self.noise, bins=int(self.ui.binsSlider.value()))
+        bins=int(self.ui.binsSlider.value())
+        ax.hist(self.noise, bins)
         ax.set_title("Noise Distribution")
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
         self.noise_distribution_plot_widget.draw()
+        self.ui.label_7.setText(f"Bins = {bins}")
 
     def calculate_error(self):
         if self.estimated_a != 0 and self.estimated_b != 0:
@@ -179,9 +186,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             a = self.ui.aSlider.value()
             b = self.ui.bSlider.value()
             sigma = self.ui.sigmaSlider.value()
-            self.ui.errorALabel.setText(str(self.a_error))
-            self.ui.errorBLabel.setText(str(self.b_error))
-            self.ui.errorSigmaLabel.setText(str(self.sigma_error))
+            self.ui.errorALabel.setText(f"a = {self.a_error:.3f}")
+            self.ui.errorBLabel.setText(f"b = {self.b_error:.3f}")
+            self.ui.errorSigmaLabel.setText(f"sigma = {self.sigma_error:.3f}")
 
             observed_values = np.array([a, b, sigma])
             predicted_values = np.array(
@@ -201,7 +208,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
             r_squared = 1 - (mse / tss)
 
-            self.ui.RLabel.setText(f"R^2={r_squared}")
+            self.ui.RLabel.setText(f"R^2={r_squared:.3f}")
 
 
 if __name__ == "__main__":
