@@ -14,6 +14,7 @@ from projectDesign import Ui_MainWindow
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
+
         self.setupUi()
         self.initialize_variables()
         self.setupPlots()
@@ -33,11 +34,18 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.ui.init_signal_vlayout.addWidget(
             self.initial_signal_plot_widget, stretch=1
         )
-        self.ui.noisy_signal_vlayout.addWidget(self.noise_distribution_plot_widget, stretch=1)
+        self.ui.noisy_signal_vlayout.addWidget(self.noisy_signal_plot_widget, stretch=1)
         self.ui.noise_distribution_vlayout.addWidget(
-            self.noisy_signal_plot_widget, stretch=1
+            self.noise_distribution_plot_widget, stretch=1
         )
         self.ui.noisePlotVLayout.addWidget(self.noise_plot_widget, stretch=1)
+
+        self.ui.init_signal_vlayout.update()
+        self.ui.noisy_signal_vlayout.update()
+        self.ui.noise_distribution_vlayout.update()
+        self.ui.noisePlotVLayout.update()
+
+        self.update()
 
     def initialize_variables(self):
         self.initial_signal = []
@@ -81,7 +89,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def plot_initial_signal(self):
         self.initial_signal_plot_widget.figure.clear()
-        N=len(self.initial_signal)
+        N = len(self.initial_signal)
 
         ax = self.initial_signal_plot_widget.figure.add_subplot(111)
         ax.plot(range(N), self.initial_signal)
@@ -110,7 +118,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.plot_noisy_signal()
         self.ui.label_5.setText(f"Mean={mean}")
         self.ui.initialSigmaLabel.setText(f"sigma = {self.ui.sigmaSlider.value()}")
-
 
     def plot_noisy_signal(self):
         self.noisy_signal_plot_widget.figure.clear()
@@ -161,7 +168,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.noise_distribution_plot_widget.figure.clear()
 
         ax = self.noise_distribution_plot_widget.figure.add_subplot(111)
-        bins=int(self.ui.binsSlider.value())
+        bins = int(self.ui.binsSlider.value())
         ax.hist(self.noise, bins)
         ax.set_title("Noise Distribution")
         ax.set_xlabel("X")
@@ -214,6 +221,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     import sys
 
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     app = QApplication(sys.argv)
     window = MyMainWindow()
     window.show()
