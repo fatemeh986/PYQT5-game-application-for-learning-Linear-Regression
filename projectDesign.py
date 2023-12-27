@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import logo
 
 
 class Ui_MainWindow(object):
@@ -16,17 +17,23 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1800, 1097)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.centralwidget.sizePolicy().hasHeightForWidth()
+        )
         self.centralwidget.setSizePolicy(sizePolicy)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.groupBox_2.sizePolicy().hasHeightForWidth())
@@ -69,7 +76,7 @@ class Ui_MainWindow(object):
         self.init_signal_group_box.setTitle("")
         self.init_signal_group_box.setObjectName("init_signal_group_box")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.init_signal_group_box)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(-1, -1, 751, 391))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(-1, -1, 751, 341))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.init_signal_vlayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.init_signal_vlayout.setContentsMargins(0, 0, 0, 0)
@@ -79,7 +86,9 @@ class Ui_MainWindow(object):
         self.label_4.setObjectName("label_4")
         self.gridLayout_3.addWidget(self.label_4, 2, 1, 1, 1, QtCore.Qt.AlignHCenter)
         self.horizontalLayout.addWidget(self.signalPlotGroup)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.horizontalLayout.addItem(spacerItem)
         self.noisySignalPlotGroup = QtWidgets.QGroupBox(self.groupBox_2)
         self.noisySignalPlotGroup.setTitle("")
@@ -102,7 +111,7 @@ class Ui_MainWindow(object):
         self.noisy_signal_group_box.setTitle("")
         self.noisy_signal_group_box.setObjectName("noisy_signal_group_box")
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.noisy_signal_group_box)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(-1, -1, 751, 371))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(-1, -1, 751, 331))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.noisy_signal_vlayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
         self.noisy_signal_vlayout.setContentsMargins(0, 0, 0, 0)
@@ -132,7 +141,9 @@ class Ui_MainWindow(object):
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.groupBox_2)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.groupBox.sizePolicy().hasHeightForWidth())
@@ -155,9 +166,11 @@ class Ui_MainWindow(object):
         self.noise_dist_group_box.setTitle("")
         self.noise_dist_group_box.setObjectName("noise_dist_group_box")
         self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.noise_dist_group_box)
-        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(-1, -1, 831, 451))
+        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(-1, -1, 831, 411))
         self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
-        self.noise_distribution_vlayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
+        self.noise_distribution_vlayout = QtWidgets.QVBoxLayout(
+            self.verticalLayoutWidget_3
+        )
         self.noise_distribution_vlayout.setContentsMargins(0, 0, 0, 0)
         self.noise_distribution_vlayout.setObjectName("noise_distribution_vlayout")
         self.verticalLayout_7.addWidget(self.noise_dist_group_box)
@@ -248,6 +261,27 @@ class Ui_MainWindow(object):
         self.gridLayout_10.addWidget(self.groupBox_5, 0, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout_10, 0, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.groupBox)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        self.label_8.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_8.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.label_8.setStyleSheet(
+            "background-image:url(:/logo/upeclogo.png);\n"
+            "background-repeat: no-repeat;\n"
+            "\n"
+            "\n"
+            ""
+        )
+        self.label_8.setText("")
+        self.label_8.setObjectName("label_8")
+        self.horizontalLayout_2.addWidget(self.label_8)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setMinimumSize(QtCore.QSize(0, 85))
+        self.label.setMaximumSize(QtCore.QSize(16777215, 100))
+        self.label.setObjectName("label")
+        self.horizontalLayout_2.addWidget(self.label)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
         self.verticalLayout_3.setStretch(0, 1)
         self.verticalLayout_3.setStretch(1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -283,3 +317,9 @@ class Ui_MainWindow(object):
         self.estimatedALabel.setText(_translate("MainWindow", "0"))
         self.estimatedBLabel.setText(_translate("MainWindow", "0"))
         self.estimatedSigmaLabel.setText(_translate("MainWindow", "0"))
+        self.label.setText(
+            _translate(
+                "MainWindow",
+                "Completed by: Boiko Andrii, Fatemeh Karamian Sorkhani, Sarker Modan Mohan",
+            )
+        )

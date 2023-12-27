@@ -20,7 +20,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,0">
     <property name="sizeConstraint">
      <enum>QLayout::SetNoConstraint</enum>
     </property>
@@ -105,7 +105,7 @@
                  <x>-1</x>
                  <y>-1</y>
                  <width>751</width>
-                 <height>391</height>
+                 <height>341</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="init_signal_vlayout"/>
@@ -178,7 +178,7 @@
                  <x>-1</x>
                  <y>-1</y>
                  <width>751</width>
-                 <height>371</height>
+                 <height>331</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="noisy_signal_vlayout"/>
@@ -277,7 +277,7 @@
                    <x>-1</x>
                    <y>-1</y>
                    <width>831</width>
-                   <height>451</height>
+                   <height>411</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="noise_distribution_vlayout"/>
@@ -455,10 +455,61 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-image:url(:/logo/upeclogo.png);
+background-repeat: no-repeat;
+
+
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>85</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Completed by: Boiko Andrii, Fatemeh Karamian Sorkhani, Sarker Modan Mohan</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

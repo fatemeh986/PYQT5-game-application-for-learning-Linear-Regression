@@ -5,19 +5,20 @@ warnings.filterwarnings("ignore")
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QSizePolicy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PyQt5.QtGui import QPen, QBrush
 import matplotlib.pyplot as plt
 import numpy as np
 from projectDesign import Ui_MainWindow
+from scipy.stats import norm, uniform, linregress
+from sklearn.metrics import r2_score
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-
         self.setupUi()
         self.initialize_variables()
         self.setupPlots()
+        self.setWindowTitle("Linear Regression Estimator")
         self.ui.noiseType.currentIndexChanged.connect(self.add_noise_to_signal)
         self.ui.binsSlider.valueChanged.connect(self.plot_noise_distribution)
         self.ui.aSlider.valueChanged.connect(self.generate_signal)
@@ -93,7 +94,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.initial_signal_plot_widget.figure.clear()
         n_parameter = len(self.initial_signal)
         a_parameter = self.ui.aSlider.value()
-        b_parameter = self.ui.aSlider.value()
+        b_parameter = self.ui.bSlider.value()
 
         ax = self.initial_signal_plot_widget.figure.add_subplot(111)
         ax.scatter(range(n_parameter), self.initial_signal)
@@ -177,13 +178,33 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def plot_noise_distribution(self):
         self.noise_distribution_plot_widget.figure.clear()
-
+        distribution_type = self.ui.noiseType.currentText()
         ax = self.noise_distribution_plot_widget.figure.add_subplot(111)
         bins = int(self.ui.binsSlider.value())
+        counts, bin_edges, patches = ax.hist(self.noise, bins, density=False)
         ax.hist(self.noise, bins)
         ax.set_title("Noise Distribution")
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
+
+        total_count = np.sum(counts)
+        bin_width = bin_edges[1] - bin_edges[0]
+
+        if distribution_type == "Gaussian":
+            mu, std = norm.fit(self.noise)
+            xmin, xmax = ax.get_xlim()
+            x = np.linspace(xmin, xmax, 100)
+            p = norm.pdf(x, mu, std)
+            ax.plot(x, p * total_count * bin_width, "k", linewidth=2)
+        elif distribution_type == "Uniform":
+            xmin, xmax = ax.get_xlim()
+            p = uniform.pdf(
+                bin_edges,
+                loc=np.min(self.noise),
+                scale=np.max(self.noise) - np.min(self.noise),
+            )
+            ax.plot(bin_edges, p * total_count * bin_width, "k", linewidth=2)
+
         self.noise_distribution_plot_widget.draw()
         self.ui.label_7.setText(f"Bins = {bins}")
 
@@ -208,24 +229,15 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             self.ui.errorBLabel.setText(f"b_err = {self.b_error:.3f}")
             self.ui.errorSigmaLabel.setText(f"sigma_err = {self.sigma_error:.3f}")
 
-            observed_values = np.array([a, b, sigma])
-            predicted_values = np.array(
-                [
-                    self.estimated_a,
-                    self.estimated_b,
-                    self.estimated_sigma,
-                ]
+            predicted_signal = [
+                self.estimated_a * x + self.estimated_b
+                for x in range(self.ui.nSlider.value())
+            ]
+
+            slope, intercept, r_squared, p_value, std_err = linregress(
+                self.noisy_signal, predicted_signal
             )
-            errors = observed_values - predicted_values
-
-            mse = np.mean(errors**2)
-
-            mean_observed = np.mean(observed_values)
-            squared_differences = (observed_values - mean_observed) ** 2
-            tss = np.sum(squared_differences)
-
-            r_squared = 1 - (mse / tss)
-
+            print(r_squared)
             self.ui.RLabel.setText(f"R^2={r_squared:.3f}")
 
 
