@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from projectDesign import Ui_MainWindow
 from scipy.stats import norm, uniform, linregress
-from sklearn.metrics import r2_score
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -37,7 +36,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         )
         self.ui.noisy_signal_vlayout.addWidget(
             self.noise_distribution_plot_widget, stretch=1
-        )  # noisy_signal_plot_widget
+        )
         self.ui.noise_distribution_vlayout.addWidget(
             self.noisy_signal_plot_widget, stretch=1
         )
@@ -83,7 +82,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.ui.initialALabel.setText(f"a_init = {a}")
         self.ui.initialBLabel.setText(f"b_init = {b}")
-        # self.ui.initialSigmaLabel.setText(f"sigma = {self.ui.sigmaSlider.value()}")
 
         self.initial_signal = [a * x + b for x in range(n)]
 
@@ -147,7 +145,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             x_indices = np.arange(len(self.noisy_signal))
             self.estimated_a, self.estimated_b = np.polyfit(
                 x_indices, self.noisy_signal, 1
-            )  # 1 indicates linear fit
+            )
             self.calculate_noise()
 
     def calculate_noise(self):
@@ -237,7 +235,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             slope, intercept, r_squared, p_value, std_err = linregress(
                 self.noisy_signal, predicted_signal
             )
-            print(r_squared)
             self.ui.RLabel.setText(f"R^2={r_squared:.3f}")
 
 
